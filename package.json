@@ -1,13 +1,26 @@
 {
   "name": "js-trial-task",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Erasys JavaScript Trial Task",
+  "author": "erasys GmbH & Lech Stawikowski",
+  "license": "ISC",
   "private": true,
+  "engines": {
+    "node": ">= 6"
+  },
   "dependencies": {
+    "bunyan": "^1.8.12",
+    "express": "^4.16.3",
+    "hashids": "^1.1.4",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1"
   },
+  "main": "index.js",
   "scripts": {
+    "startServer": "node ./index | bunyan",
     "start": "PORT=8000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
