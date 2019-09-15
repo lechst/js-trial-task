@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Users from './components/users';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  // default state object
+  state = {
+    users: []
+  };
+
+  componentDidMount() {
+    fetch('http://localhost:3000/api/search?length=2')
+      .then(response => response.json())
+      .then((data) => {
+
+        const newUsers = data.items.map(item => {
+          return {
+            id: item.id,
+            name: item.name
+          };
+        });
+
+        const newState = Object.assign({}, this.state, {
+          contacts: newUsers
+        });
+
+        this.setState(newState);
+
+      })
+      .catch(error => console.log(error));
+  }
+
+  render() {
+    return (
+      <Users users={this.state.users} />
+    )
+  }
+
 }
 
 export default App;
