@@ -21,7 +21,7 @@ class App extends Component {
         });
 
         const newState = Object.assign({}, this.state, {
-          contacts: newUsers
+          users: newUsers
         });
 
         this.setState(newState);
