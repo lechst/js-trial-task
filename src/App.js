@@ -9,14 +9,16 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/search?length=2')
+    fetch('http://localhost:3000/api/search?length=32')
       .then(response => response.json())
       .then((data) => {
 
         const newUsers = data.items.map(item => {
           return {
             id: item.id,
-            name: item.name
+            name: item.name,
+            lastLogin: item.last_login,
+            pic: item.hasOwnProperty("picture")?item.picture.url:null
           };
         });
 
@@ -25,6 +27,8 @@ class App extends Component {
         });
 
         this.setState(newState);
+
+        console.log(this.state);
 
       })
       .catch(error => console.log(error));
