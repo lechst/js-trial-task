@@ -28,6 +28,34 @@ class App extends Component {
 
         this.setState(newState);
 
+        let reqUrl = "";
+
+        data.items.forEach(item => {
+          reqUrl += "ids="+item.id+"&";
+        });
+
+        return fetch('http://localhost:3000/api/profiles?'+reqUrl);
+
+      })
+      .then(response => response.json())
+      .then((data) => {
+
+        const newUsers = data.map((item, index) => {
+          return {
+            id: this.state.users[index].id,
+            name: this.state.users[index].name,
+            lastLogin: this.state.users[index].lastLogin,
+            pic: this.state.users[index].pic,
+            headline: item.headline
+          };
+        });
+
+        const newState = Object.assign({}, this.state, {
+          users: newUsers
+        });
+
+        this.setState(newState);
+
         console.log(this.state);
 
       })
