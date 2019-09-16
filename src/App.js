@@ -9,9 +9,14 @@ class App extends Component {
   };
 
   componentDidMount() {
+
+    // 1st API endpoint request
+
     fetch('http://localhost:3000/api/search?length=32')
       .then(response => response.json())
       .then((data) => {
+
+        // feed up users with relevant data from 1st API endpoint
 
         const newUsers = data.items.map(item => {
           return {
@@ -22,11 +27,15 @@ class App extends Component {
           };
         });
 
+        // update state object
+
         const newState = Object.assign({}, this.state, {
           users: newUsers
         });
 
         this.setState(newState);
+
+        // find url for the 2nd API endpoint request
 
         let reqUrl = "";
 
@@ -34,11 +43,15 @@ class App extends Component {
           reqUrl += "ids="+item.id+"&";
         });
 
+        // 2nd API endpoint request
+
         return fetch('http://localhost:3000/api/profiles?'+reqUrl);
 
       })
       .then(response => response.json())
       .then((data) => {
+
+        // feed up users with a new data from 2nd API endpoint
 
         const newUsers = data.map((item, index) => {
           return {
@@ -53,6 +66,8 @@ class App extends Component {
           };
         });
 
+        // update state object
+
         const newState = Object.assign({}, this.state, {
           users: newUsers
         });
@@ -63,6 +78,7 @@ class App extends Component {
 
       })
       .catch(error => console.log(error));
+
   }
 
   render() {
