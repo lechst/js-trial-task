@@ -46,7 +46,10 @@ class App extends Component {
             name: this.state.users[index].name,
             lastLogin: this.state.users[index].lastLogin,
             pic: this.state.users[index].pic,
-            headline: item.headline
+            headline: item.headline,
+            location: item.location.name,
+            distance: item.location.distance,
+            age: item.personal.age
           };
         });
 

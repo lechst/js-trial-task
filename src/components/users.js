@@ -9,7 +9,12 @@ const Users = ({users}) => {
 					<div className="card-body">
 						<h5 className="card-title">{user.name}</h5>
 						<p className="card-text">{user.headline}</p>
-						<p className="card-text">{user.lastLogin}</p>
+						<p className="card-text">Age: {user.age}</p>
+						<p className="card-text">Location: {user.location}</p>
+						<p className="card-text">Distance: {user.distance}</p>
+						<div className="card-footer">
+							<small className="text-muted">{user.lastLogin}</small>
+						</div>
 					</div>
 				</div>
 			))}
