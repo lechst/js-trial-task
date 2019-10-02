@@ -53,17 +53,21 @@ class App extends Component {
 
         // feed up users with a new data from 2nd API endpoint
 
-        const newUsers = data.map((item, index) => {
+        const newUsers = this.state.users.map(item => {
+
+          const userData = data.find(x => x.id === item.id);
+
           return {
-            id: this.state.users[index].id,
-            name: this.state.users[index].name,
-            lastLogin: this.state.users[index].lastLogin,
-            pic: this.state.users[index].pic,
-            headline: item.headline,
-            location: item.location.name,
-            distance: item.location.distance,
-            age: item.personal.age
+            id: item.id,
+            name: item.name,
+            lastLogin: item.lastLogin,
+            pic: item.pic,
+            headline: userData.headline,
+            location: userData.location.name,
+            distance: userData.location.distance,
+            age: userData.personal.age
           };
+
         });
 
         // update state object
