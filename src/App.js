@@ -21,6 +21,7 @@ class App extends Component {
         const newUsers = data.items.map(item => {
           return {
             id: item.id,
+            plus: item.is_plus,
             name: item.name,
             lastLogin: item.last_login,
             pic: item.hasOwnProperty("picture")?item.picture.url:null
@@ -59,6 +60,7 @@ class App extends Component {
 
           return {
             id: item.id,
+            plus: item.plus,
             name: item.name,
             lastLogin: item.lastLogin,
             pic: item.pic,
