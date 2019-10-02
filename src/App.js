@@ -168,6 +168,18 @@ class App extends Component {
             </ul>
           </nav>
 
+          <div className="row">
+            <div className="col-md-6 box">big content</div>
+            <div className="col-md-6">
+              <div className="row">
+                <div className="col-md-6 small-box">1</div>
+                <div className="col-md-6 small-box">2</div>
+                <div className="col-md-6 small-box">3</div>
+                <div className="col-md-6 small-box">4</div>
+              </div>
+            </div>
+          </div>
+
           <Users users={this.state.users} />
 
         </div>
