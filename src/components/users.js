@@ -76,10 +76,14 @@ const Users = ({users}) => {
 
                     for(let i=0; i<usersBig.length; i++){
                         newUsers.push(usersBig[i]);
-                        for(let j=0; j<4; j++){
-                            newUsers.push(usersSmall[indexUsersSmall]);
-                            indexUsersSmall++;
+
+                        if(indexUsersSmall < (usersSmall.length - 3)){
+                            for(let j=0; j<4; j++){
+                                newUsers.push(usersSmall[indexUsersSmall]);
+                                indexUsersSmall++;
+                            }
                         }
+
                     }
 
                     for(let i=indexUsersSmall; i<usersSmall.length; i++){

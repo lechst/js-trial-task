@@ -30,8 +30,8 @@ code {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1650px) {
   .card-columns {
-    column-count: 1;
+    column-count: 2;
   }
 }
