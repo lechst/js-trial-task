@@ -3,16 +3,21 @@ import Users from './components/users';
 
 class App extends Component {
 
-  // default state object
-  state = {
-    users: []
-  };
+  constructor( props ){
+    super( props );
+    this.state = {
+      users: [],
+      cursorHistory: [],
+      cursorIndex: 0
+    };
+    this.changePage = this.changePage.bind(this);
+  }
 
-  componentDidMount() {
+  requestData(url) {
 
     // 1st API endpoint request
 
-    fetch('http://localhost:3000/api/search?length=32')
+    fetch(url)
       .then(response => response.json())
       .then((data) => {
 
@@ -30,8 +35,12 @@ class App extends Component {
 
         // update state object
 
+        let newCursorHistory = this.state.cursorHistory;
+        newCursorHistory.push( data.cursors.after );
+
         const newState = Object.assign({}, this.state, {
-          users: newUsers
+          users: newUsers,
+          cursorHistory: newCursorHistory
         });
 
         this.setState(newState);
@@ -87,9 +96,81 @@ class App extends Component {
 
   }
 
+  changePage(next){
+
+    console.log(this.state.cursorIndex);
+
+    let cursor;
+
+    if( next ){
+
+      cursor = this.state.cursorHistory[ this.state.cursorIndex ];
+
+      console.log("next "+cursor);
+
+      const newState = Object.assign({}, this.state, {
+        cursorIndex : this.state.cursorIndex + 1
+      });
+
+      this.setState(newState);
+
+      this.requestData('http://localhost:3000/api/search?cursor='+cursor);
+
+    } else {
+
+      if( this.state.cursorIndex === 0 ){
+        return;
+      }
+
+      cursor = this.state.cursorHistory[ this.state.cursorIndex - 2 ];
+
+      console.log("prev "+cursor);
+
+      let newCursorHistory = this.state.cursorHistory;
+      newCursorHistory.pop();
+      newCursorHistory.pop();
+
+      const newState = Object.assign({}, this.state, {
+        cursorHistory : newCursorHistory,
+        cursorIndex : this.state.cursorIndex - 1
+      });
+
+      this.setState(newState);
+
+      if( this.state.cursorIndex === 1 ){
+
+        this.requestData('http://localhost:3000/api/search?length=32');
+
+      } else {
+
+        this.requestData('http://localhost:3000/api/search?cursor='+cursor);
+
+      }
+
+    }
+
+  }
+
+  componentDidMount() {
+
+    this.requestData('http://localhost:3000/api/search?length=32');
+
+  }
+
   render() {
     return (
-      <Users users={this.state.users} />
+        <div>
+
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              <li className="page-item" onClick={ () => this.changePage(false) }><a className="page-link" href="#">Previous</a></li>
+              <li className="page-item" onClick={ () => this.changePage(true) }><a className="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+
+          <Users users={this.state.users} />
+
+        </div>
     )
   }
 
